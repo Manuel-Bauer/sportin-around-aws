@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-sportinaroundaws-dev-114932-authRole",
+      "UnauthRoleArn": "arn:aws:iam::491558631472:role/amplify-sportinaroundaws-dev-114932-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::491558631472:role/amplify-sportinaroundaws-dev-114932-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-sportinaroundaws-dev-114932-deployment",
+      "UnauthRoleName": "amplify-sportinaroundaws-dev-114932-unauthRole",
+      "StackName": "amplify-sportinaroundaws-dev-114932",
+      "StackId": "arn:aws:cloudformation:eu-west-1:491558631472:stack/amplify-sportinaroundaws-dev-114932/ed750ab0-067e-11ed-b346-063f56c5baa1",
+      "AmplifyAppId": "d1q47r2txbubiq"
+    }
+  }
+}
