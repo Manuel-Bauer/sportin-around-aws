@@ -39,3 +39,12 @@ async function signIn(
     console.log('error signing in', error);
   }
 }
+
+async function resendConfirmationCode(username): Promise<void> {
+  try {
+    await Auth.resendSignUp(username);
+    console.log('code resent successfully');
+  } catch (err) {
+    console.log('error resending code: ', err);
+  }
+}
