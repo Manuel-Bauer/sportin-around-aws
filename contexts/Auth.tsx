@@ -27,3 +27,15 @@ async function confirmSignUp(email: string, code: string): Promise<void> {
     console.log('error confirming sign up', error);
   }
 }
+
+async function signIn(
+  username: string,
+  password: string
+): Promise<CognitoUser | void> {
+  try {
+    const user = await Auth.signIn(username, password);
+    return user;
+  } catch (error) {
+    console.log('error signing in', error);
+  }
+}
