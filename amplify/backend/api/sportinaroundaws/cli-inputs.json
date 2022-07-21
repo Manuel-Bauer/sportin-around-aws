@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "sportinaroundaws",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "/home/manuel-bauer/projects/sportin-around-aws/amplify/backend/api/sportinaroundaws/schema.graphql",
+    "defaultAuthType": {
+      "mode": "API_KEY",
+      "expirationTime": 7
+    }
+  }
+}
