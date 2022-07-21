@@ -10,6 +10,11 @@
       "StackName": "amplify-sportinaroundaws-dev-114932",
       "StackId": "arn:aws:cloudformation:eu-west-1:491558631472:stack/amplify-sportinaroundaws-dev-114932/ed750ab0-067e-11ed-b346-063f56c5baa1",
       "AmplifyAppId": "d1q47r2txbubiq"
+    },
+    "categories": {
+      "auth": {
+        "sportinaroundawseca0df22": {}
+      }
     }
   }
 }
