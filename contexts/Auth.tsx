@@ -40,11 +40,19 @@ async function signIn(
   }
 }
 
-async function resendConfirmationCode(username): Promise<void> {
+async function resendConfirmationCode(username: string): Promise<void> {
   try {
     await Auth.resendSignUp(username);
     console.log('code resent successfully');
   } catch (err) {
     console.log('error resending code: ', err);
+  }
+}
+
+async function signOut(): Promise<void> {
+  try {
+    await Auth.signOut();
+  } catch (error) {
+    console.log('error signing out: ', error);
   }
 }
