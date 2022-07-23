@@ -1,5 +1,12 @@
 import { Auth } from 'aws-amplify';
 import { CognitoUser } from '@aws-amplify/auth';
+import React, { useContext, useState, useEffect } from 'react';
+
+const AuthContext = React.createContext(null);
+
+export function useAuth() {
+  return useContext(AuthContext);
+}
 
 async function signup(
   username: string,
