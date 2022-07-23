@@ -1,65 +1,81 @@
 import { Auth } from 'aws-amplify';
 import { CognitoUser } from '@aws-amplify/auth';
 import React, { useContext, useState, useEffect } from 'react';
+import { useQuery } from 'react-query';
 
 const AuthContext = React.createContext(null);
 
+/* ----- HOOK TO MAKE AUTH REUSABLE----- */
 export function useAuth() {
   return useContext(AuthContext);
 }
 
-async function signup(
-  username: string,
-  password: string,
-  email: string
-): Promise<CognitoUser | void> {
-  try {
-    const { user } = await Auth.signUp({
-      username,
-      password,
-      attributes: {
-        email,
-      },
-    });
-    return user;
-  } catch (error) {
-    console.log('error signing up:', error);
-  }
-}
+/* ----- Provider ----- */
+export function AuthProvider({ children }: React.PropsWithChildren) {
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const [currentUser, setCurrentUser] = useState<any>(null);
 
-async function confirmSignUp(email: string, code: string): Promise<void> {
-  try {
-    Auth.confirmSignUp(email, code);
-  } catch (error) {
-    console.log('error confirming sign up', error);
+  const { refetch: userRefetch } = useQuery(
+    ['user', currentUserId],
+    () => console.log('getUserById'),
+    {
+      enabled: !!currentUserId,
+      onSuccess: (data) => setCurrentUser(data),
+    }
+  );
+  async function signup(
+    username: string,
+    password: string,
+    email: string
+  ): Promise<CognitoUser | void> {
+    try {
+      const { user } = await Auth.signUp({
+        username,
+        password,
+        attributes: {
+          email,
+        },
+      });
+      return user;
+    } catch (error) {
+      console.log('error signing up:', error);
+    }
   }
-}
 
-async function signIn(
-  username: string,
-  password: string
-): Promise<CognitoUser | void> {
-  try {
-    const user = await Auth.signIn(username, password);
-    return user;
-  } catch (error) {
-    console.log('error signing in', error);
+  async function confirmSignUp(email: string, code: string): Promise<void> {
+    try {
+      Auth.confirmSignUp(email, code);
+    } catch (error) {
+      console.log('error confirming sign up', error);
+    }
   }
-}
 
-async function resendConfirmationCode(username: string): Promise<void> {
-  try {
-    await Auth.resendSignUp(username);
-    console.log('code resent successfully');
-  } catch (err) {
-    console.log('error resending code: ', err);
+  async function signIn(
+    username: string,
+    password: string
+  ): Promise<CognitoUser | void> {
+    try {
+      const user = await Auth.signIn(username, password);
+      return user;
+    } catch (error) {
+      console.log('error signing in', error);
+    }
   }
-}
 
-async function signOut(): Promise<void> {
-  try {
-    await Auth.signOut();
-  } catch (error) {
-    console.log('error signing out: ', error);
+  async function resendConfirmationCode(username: string): Promise<void> {
+    try {
+      await Auth.resendSignUp(username);
+      console.log('code resent successfully');
+    } catch (err) {
+      console.log('error resending code: ', err);
+    }
+  }
+
+  async function signOut(): Promise<void> {
+    try {
+      await Auth.signOut();
+    } catch (error) {
+      console.log('error signing out: ', error);
+    }
   }
 }
