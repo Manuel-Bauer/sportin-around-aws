@@ -1,4 +1,4 @@
-import { Auth } from 'aws-amplify';
+import { Auth, Hub } from 'aws-amplify';
 import { CognitoUser } from '@aws-amplify/auth';
 import React, { useContext, useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
@@ -84,5 +84,28 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
     Auth.currentAuthenticatedUser()
       .then((user) => user && setCurrentUserId(user.username))
       .catch((err) => setCurrentUserId(null));
+
+    /* On auth events */
+    Hub.listen('auth', ({ payload }) => {
+      Auth.currentAuthenticatedUser()
+        .then((user) => user && setCurrentUserId(user.username))
+        .catch((err) => setCurrentUserId(null));
+    });
   }, []);
+
+  // Get all user data when current User ID changes
+  useEffect(() => {
+    userRefetch();
+  }, [currentUserId]);
+
+  const value = {
+    currentUserId,
+    currentUser,
+    signup,
+    signIn,
+    signOut,
+    resendConfirmationCode,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
