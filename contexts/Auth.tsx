@@ -78,4 +78,11 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
       console.log('error signing out: ', error);
     }
   }
+
+  useEffect(() => {
+    /* On First Load */
+    Auth.currentAuthenticatedUser()
+      .then((user) => user && setCurrentUserId(user.username))
+      .catch((err) => setCurrentUserId(null));
+  }, []);
 }
