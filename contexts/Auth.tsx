@@ -3,7 +3,18 @@ import { CognitoUser } from '@aws-amplify/auth';
 import React, { useContext, useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 
-const AuthContext = React.createContext(null);
+import { User } from '../utils/types/User.Type';
+
+interface IAuth {
+  currentUserId: string | null;
+  signup: (
+    username: string,
+    password: string,
+    email: string
+  ) => Promise<CognitoUser | void>;
+}
+
+const AuthContext = React.createContext<IAuth | null>(null);
 
 /* ----- HOOK TO MAKE AUTH REUSABLE----- */
 export function useAuth() {
@@ -98,13 +109,9 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
     userRefetch();
   }, [currentUserId]);
 
-  const value = {
+  const value: IAuth = {
     currentUserId,
-    currentUser,
     signup,
-    signIn,
-    signOut,
-    resendConfirmationCode,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
